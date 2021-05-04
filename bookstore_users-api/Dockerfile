@@ -1,12 +1,20 @@
-FROM golang:1.14.6-alpine3.12 as builder
-COPY go.mod go.sum /go/src/gitlab.com/idoko/bucketeer/
-WORKDIR /go/src/gitlab.com/idoko/bucketeer
-RUN go mod download
-COPY . /go/src/gitlab.com/idoko/bucketeer
-RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o build/bucketeer gitlab.com/idoko/bucketeer
-
-FROM alpine
-RUN apk add --no-cache ca-certificates && update-ca-certificates
-COPY --from=builder /go/src/gitlab.com/idoko/bucketeer/build/bucketeer /usr/bin/bucketeer
-EXPOSE 8080 8080
-ENTRYPOINT ["/usr/bin/bucketeer"]
+## We specify the base image we need for our
+## go application
+FROM golang:1.12.0-alpine3.9
+## We create an /app directory within our
+## image that will hold our application source
+## files
+RUN mkdir /app
+## We copy everything in the root directory
+## into our /app directory
+ADD . /app
+## We specify that we now wish to execute 
+## any further commands inside our /app
+## directory
+WORKDIR /app
+## we run go build to compile the binary
+## executable of our Go program
+RUN go build -o main .
+## Our start command which kicks off
+## our newly created binary executable
+CMD ["/app/main"]

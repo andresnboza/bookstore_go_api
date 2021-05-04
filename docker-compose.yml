@@ -1,16 +1,15 @@
 version: "3.3"
 
 services:
-  # bookstore_users_api:
-  #   build: bookstore_users-api
-  #   volumes: "./bookstore_users-api:/"
-  #   restart: always
-  #   ports:
-  #     - "${BOOKSTORE_PORT}:${BOOKSTORE_PORT}"
-  #   volumes:
-  #     - "/bookstore_users-api:":
-  #   depends_on:
-  #     - bookstore_users_api_mysql_db
+  bookstore_users_api:
+    build: bookstore_users-api
+    restart: always
+    ports:
+      - "${BOOKSTORE_PORT}:${BOOKSTORE_PORT}"
+    volumes:
+      - bookstore_users-api:/app
+    depends_on:
+      - bookstore_users_api_mysql_db
 
   bookstore_users_api_mysql_db:
     image: mysql:5.7
@@ -26,4 +25,8 @@ services:
     expose:
       - "${BOOKSTORE_USERS_API_PORT}"
     volumes:
-      - "/bookstore_users_api_db:/var/lib/mysql"
+      - bookstore_users_api_db:/var/lib/mysql
+
+volumes:
+  bookstore_users_api_db:
+  bookstore_users-api:

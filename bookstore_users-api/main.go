@@ -1,19 +1,22 @@
 package main
 
 import (
-	"fmt"
-	"log"
-	"net/http"
+    "fmt"
+    "html"
+    "log"
+    "net/http"
 )
 
 func main() {
-	http.HandleFunc("/", hello)
-	fmt.Println("Server started at http://localhost:8080")
-	log.Fatal(http.ListenAndServe(":8080", nil))
-}
 
-func hello(w http.ResponseWriter, r *http.Request) {
-	w.WriteHeader(http.StatusOK)
-	w.Header().Set("Content-Type", "application/json")
-	w.Write([]byte(`{"message":"hello world! my friend"}`))
+    http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+        fmt.Fprintf(w, "Hello, %q", html.EscapeString(r.URL.Path))
+    })
+
+    http.HandleFunc("/hi", func(w http.ResponseWriter, r *http.Request){
+        fmt.Fprintf(w, "Hi")
+    })
+
+    log.Fatal(http.ListenAndServe(":8080", nil))
+
 }
