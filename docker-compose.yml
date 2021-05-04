@@ -4,22 +4,25 @@ services:
   bookstore_users_api:
     build: bookstore_users-api
     restart: always
+    container_name: bookstore_users_api
+    environment:
+      app_location: ${BOOKSTORE_USERS_API_APP_LOCATION}
     ports:
       - "${BOOKSTORE_PORT}:${BOOKSTORE_PORT}"
     volumes:
-      - bookstore_users-api:/app
+      - ./bookstore_users-api:/app
     depends_on:
       - bookstore_users_api_mysql_db
 
   bookstore_users_api_mysql_db:
     image: mysql:5.7
     restart: always
+    container_name: bookstore_users_api_mysql_db
     environment:
       MYSQL_DATABASE: ${BOOKSTORE_USERS_API_MYSQL_DATABASE}
       MYSQL_USER: ${BOOKSTORE_USERS_API_MYSQL_USER}
       MYSQL_PASSWORD: ${BOOKSTORE_USERS_API_MYSQL_PASSWORD}
       MYSQL_ROOT_PASSWORD: ${BOOKSTORE_USERS_API_MYSQL_ROOT_DATABASE}
-
     ports:
       - "${BOOKSTORE_USERS_API_PORT}:3306"
     expose:
