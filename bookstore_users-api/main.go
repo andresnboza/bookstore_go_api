@@ -7,6 +7,6 @@ import (
 )
 
 func main() {
-	fmt.Println("Server working on: http://localhost:8081")
+	fmt.Println("Server working on: http://localhost:8080")
 	app.StartApplication()
 }

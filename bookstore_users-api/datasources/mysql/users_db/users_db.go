@@ -29,15 +29,17 @@ var (
 	// schema   = os.Getenv(mysql_users_schema)
 
 	// TODO: eliminate these when useing docker
-	username = "andres"
-	password = "Taquito.123"
-	host     = "127.0.0.1:3306"
+	username = "root"
+	password = "p@ssw0rd1"
+	host     = "bookstore_users-api_mysql_db:3306"
 	schema   = "users_db"
 )
 
 // This is a function that is executed when the package in imported
 func init() {
 	dataSourceName := fmt.Sprintf("%s:%s@tcp(%s)/%s?charset=utf8", username, password, host, schema)
+
+	log.Println(dataSourceName)
 
 	var err error
 	Client, err = sql.Open("mysql", dataSourceName)

@@ -1,35 +1,58 @@
-version: "3.3"
+# version: "3.8"
+
+# services:
+#   bookstore_users_api:
+#     build: bookstore_users-api
+#     restart: always
+#     container_name: bookstore_users_api
+#     environment:
+#       app_location: ${BOOKSTORE_USERS_API_APP_LOCATION}
+#     ports:
+#       - "${BOOKSTORE_PORT}:${BOOKSTORE_PORT}"
+#     depends_on:
+#       - bookstore_users_api_mysql_db
+
+#   bookstore_users_api_mysql_db:
+#     image: mysql
+#     ports:
+#       - ${BOOKSTORE_USERS_API_PORT}:${BOOKSTORE_USERS_API_PORT}
+#     environment:
+#       - MYSQL_ROOT_PASSWORD=${BOOKSTORE_USERS_API_MYSQL_ROOT_DATABASE}
+#     volumes:
+#       - mysql:/var/lib/mysql
+#       - mysql_config:/etc/mysql
+
+# volumes:
+#   mysql:
+#   mysql_config:
+
+version: "3.8"
 
 services:
-  bookstore_users_api:
+  bookstore_users-api:
     build: bookstore_users-api
     restart: always
-    container_name: bookstore_users_api
+    container_name: bookstore_users-api
     environment:
       app_location: ${BOOKSTORE_USERS_API_APP_LOCATION}
     ports:
       - "${BOOKSTORE_PORT}:${BOOKSTORE_PORT}"
     volumes:
-      - ./bookstore_users-api:/
+      - "/bookstore_users-api:/go/src/github.com/andresnboza/bookstore_users-api"
+    working_dir: /go/src/github.com/andresnboza/bookstore_users-api
     depends_on:
-      - bookstore_users_api_mysql_db
+      - bookstore_users-api_mysql_db
 
-  bookstore_users_api_mysql_db:
-    image: mysql:5.7
-    restart: always
-    container_name: bookstore_users_api_mysql_db
-    environment:
-      MYSQL_DATABASE: ${BOOKSTORE_USERS_API_MYSQL_DATABASE}
-      MYSQL_USER: ${BOOKSTORE_USERS_API_MYSQL_USER}
-      MYSQL_PASSWORD: ${BOOKSTORE_USERS_API_MYSQL_PASSWORD}
-      MYSQL_ROOT_PASSWORD: ${BOOKSTORE_USERS_API_MYSQL_ROOT_DATABASE}
+  bookstore_users-api_mysql_db:
+    image: mysql
     ports:
-      - "${BOOKSTORE_USERS_API_PORT}:3306"
-    expose:
-      - "${BOOKSTORE_USERS_API_PORT}"
+      - ${BOOKSTORE_USERS_API_PORT}:${BOOKSTORE_USERS_API_PORT}
+    environment:
+      - MYSQL_ROOT_PASSWORD=${BOOKSTORE_USERS_API_MYSQL_ROOT_DATABASE}
     volumes:
-      - bookstore_users_api_db:/var/lib/mysql
+      - mysql:/var/lib/mysql
+      - mysql_config:/etc/mysql
 
 volumes:
-  bookstore_users_api_db:
-  bookstore_users-api:
+  mysql:
+  mysql_config:

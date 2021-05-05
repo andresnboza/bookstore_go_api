@@ -19,6 +19,7 @@ func getUserId(userIdParam string) (int64, *errors.RestErr) {
 
 func Create(c *gin.Context) {
 	var user users.User
+	
 	// Getting the json representation of the user and validation the json representation
 	if err := c.ShouldBindJSON(&user); err != nil {
 		restErr := errors.NewBadRequestError("invalid json body")

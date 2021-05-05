@@ -2,6 +2,7 @@ package users
 
 import (
 	"bookstore_users-api/utils/errors"
+	"fmt"
 	"strings"
 )
 
@@ -36,12 +37,12 @@ func (user *User) Validate() *errors.RestErr {
 	
 	user.FirstName = strings.TrimSpace(strings.ToLower(user.FirstName))
 	if user.FirstName == "" {
-		return errors.NewBadRequestError("invalid FirstName address")
+		return errors.NewBadRequestError("invalid FirstName")
 	}
 
 	user.LastName = strings.TrimSpace(strings.ToLower(user.LastName))
 	if user.LastName == "" {
-		return errors.NewBadRequestError("invalid LastName address")
+		return errors.NewBadRequestError("invalid LastName")
 	}
 	
 	user.Email = strings.TrimSpace(strings.ToLower(user.Email))
@@ -50,8 +51,11 @@ func (user *User) Validate() *errors.RestErr {
 	}
 
 	user.Password = strings.TrimSpace(user.Password)
+
+	fmt.Println(user.Password)
+
 	if user.Password == "" {
-		return errors.NewBadRequestError("invalid password address")
+		return errors.NewBadRequestError("invalid password")
 	}
 	
 	return nil
