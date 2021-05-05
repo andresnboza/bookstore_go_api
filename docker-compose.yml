@@ -38,7 +38,7 @@ services:
     ports:
       - "${BOOKSTORE_PORT}:${BOOKSTORE_PORT}"
     volumes:
-      - "/bookstore_users-api:/go/src/github.com/andresnboza/bookstore_users-api"
+      - "./bookstore_users-api:/go/src/github.com/andresnboza/bookstore_users-api"
     working_dir: /go/src/github.com/andresnboza/bookstore_users-api
     depends_on:
       - bookstore_users-api_mysql_db
@@ -56,3 +56,4 @@ services:
 volumes:
   mysql:
   mysql_config:
+  bookstore_users-api:
