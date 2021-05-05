@@ -10,7 +10,7 @@ services:
     ports:
       - "${BOOKSTORE_PORT}:${BOOKSTORE_PORT}"
     volumes:
-      - ./bookstore_users-api:/app
+      - ./bookstore_users-api:/
     depends_on:
       - bookstore_users_api_mysql_db
 
