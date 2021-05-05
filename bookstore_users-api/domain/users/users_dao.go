@@ -1,17 +1,19 @@
 package users
 
 import (
-	"bookstore_users-api/utils/mysql_utils"
+	"bookstore_users-api/datasources/mysql/users_db"
 	"bookstore_users-api/utils/errors"
+	"bookstore_users-api/utils/mysql_utils"
+	"fmt"
 )
 
 const (
-	indexUniqueEmail 		= "email_UNIQUE"
-	errorNoRows      		= "no rows in result set"
-	queryInsertUser  		= "INSERT INTO users(first_name, last_name, email, date_created, password, status) VALUES (?, ?, ?, ?, ?, ?);"
-	queryGetUser     		= "SELECT id, first_name, last_name, email, date_created FROM users WHERE id=?;"
-	queryUpdateUser  		= "UPDATE users SET first_name=?, last_name=?, email=? WHERE id=?;"
-	queryDeleteUser  		= "DELETE FROM users where id=?;"
+	indexUniqueEmail 				= "email_UNIQUE"
+	errorNoRows      				= "no rows in result set"
+	queryInsertUser  				= "INSERT INTO users(first_name, last_name, email, date_created, password, status) VALUES (?, ?, ?, ?, ?, ?);"
+	queryGetUser     				= "SELECT id, first_name, last_name, email, date_created FROM users WHERE id=?;"
+	queryUpdateUser  				= "UPDATE users SET first_name=?, last_name=?, email=? WHERE id=?;"
+	queryDeleteUser  				= "DELETE FROM users where id=?;"
 	queryFindUserByStatus 	= "SELECT id, first_name, last_name, email, date_created, status FROM users WHERE status=?;"
 )
 
@@ -105,7 +107,7 @@ func (user *User) FindByStatus(status string) ([]User, *errors.RestErr) {
 	}
 
 	if len(results) == 0 {
-		return nil, errors.NewNotFound(fmt.Sprintf("no users matching status %s", status))
+		return nil, errors.NewNotFoundError(fmt.Sprintf("no users matching status %s", status))
 	}
 
 	return results, nil
