@@ -2,7 +2,6 @@ package users
 
 import (
 	"bookstore_users-api/utils/errors"
-	"fmt"
 	"strings"
 )
 
@@ -16,8 +15,8 @@ type User struct {
 	LastName		string `json:"last_name"`
 	Email				string `json:"email"`
 	DateCreated string `json:"date_created"`
-	Status      string `json:"status"`
-	Password    string `json:"-"`
+	Status			string `json:"status"`
+	Password		string `json:"password"`
 }
 
 // Function 
@@ -51,8 +50,6 @@ func (user *User) Validate() *errors.RestErr {
 	}
 
 	user.Password = strings.TrimSpace(user.Password)
-
-	fmt.Println(user.Password)
 
 	if user.Password == "" {
 		return errors.NewBadRequestError("invalid password")
