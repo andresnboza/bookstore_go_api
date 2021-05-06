@@ -11,5 +11,5 @@ func ServerHello(c *gin.Context) {
 }
 
 func Ping(c *gin.Context) {
-	c.String(http.StatusOK, "Hello World with hot reload working")
+	c.String(http.StatusOK, "Hello World 123")
 }

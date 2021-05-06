@@ -1,6 +1,7 @@
 package errors
 
 import (
+	"errors"
 	"net/http"
 )
 
@@ -16,6 +17,10 @@ func NewBadRequestError(message string) *RestErr {
 		Status:  http.StatusBadRequest,
 		Error:   "bad_request",
 	}
+}
+
+func NewError(msg string) error {
+	return errors.New(msg)
 }
 
 func NewNotFoundError(message string) *RestErr {

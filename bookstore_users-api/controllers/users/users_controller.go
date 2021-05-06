@@ -1,14 +1,14 @@
 package users
 
 import (
-	"net/http"
-	"strconv"
 	"bookstore_users-api/domain/users"
 	"bookstore_users-api/services"
 	"bookstore_users-api/utils/errors"
+	"net/http"
+	"strconv"
+
 	"github.com/gin-gonic/gin"
 )
-
 
 func getUserId(userIdParam string) (int64, *errors.RestErr) {
 	user_id, userErr := strconv.ParseInt(userIdParam, 10, 64)
@@ -20,7 +20,7 @@ func getUserId(userIdParam string) (int64, *errors.RestErr) {
 
 func Create(c *gin.Context) {
 	var user users.User
-	
+
 	// Getting the json representation of the user and validation the json representation
 	if err := c.ShouldBindJSON(&user); err != nil {
 		restErr := errors.NewBadRequestError("invalid json body")
