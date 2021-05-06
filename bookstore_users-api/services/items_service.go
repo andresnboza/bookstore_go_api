@@ -1,8 +1,13 @@
 package services
 
 var (
-	ItemsService itemsService = itemsService{}
+	ItemsService itemsServiceinterface = &itemsService{}
 )
+
+type itemsServiceinterface interface {
+	GetItem()
+	SaveItem()
+}
 
 type itemsService struct {
 }
